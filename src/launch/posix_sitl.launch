@@ -10,8 +10,8 @@
 
     <arg name="est" default="lpe"/>
     <arg name="vehicle" default="f450"/>
-    <arg name="world" default="$(find simulation_control)/worlds/crazy_bluebox.world"/>
-    <arg name="sdf" default="$(find simulation_control)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
+    <arg name="world" default="$(find simulation_control)/src/worlds/crazy_bluebox.world"/>
+    <arg name="sdf" default="$(find simulation_control)/src/models/$(arg vehicle)/$(arg vehicle).sdf"/>
     <arg name="rcS" default="$(find px4)/posix-configs/SITL/init/$(arg est)/$(arg vehicle)"/>
 
     <arg name="headless" default="false"/>
