@@ -10,3 +10,5 @@ wait a little while
 terminal2: roslaunch simulation_control px4.launch fcu_url:="udp://:14550@127.0.0.1:14557"
 
 terminal3: roslaunch simulation_control simulation_control.launch 
+
+ready to fly
