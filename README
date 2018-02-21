@@ -11,4 +11,6 @@ terminal2: roslaunch simulation_control px4.launch fcu_url:="udp://:14550@127.0.
 
 terminal3: roslaunch simulation_control simulation_control.launch 
 
+you might want to delete  line 439 - 482 in the world file if gazebo doesnt startup, its just house in the map 
+
 have fun

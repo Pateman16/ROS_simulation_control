@@ -2,7 +2,6 @@
 import rospy
 import actionlib
 import simulation_control.msg
-from apriltags2_ros.msg import AprilTagDetectionArray
 
 from geometry_msgs.msg import PoseStamped, Point
 class detect_object_server():
