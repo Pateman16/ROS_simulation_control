@@ -45,9 +45,9 @@ class position_control():
         self.current_mode.data = 'posctr'
 
         self.vController = VelocityController()
-        self.vController.set_x_pid(2.8, 0.913921, 0.0, 0.5)
-        self.vController.set_y_pid(2.8, 0.913921, 0.0, 0.5)#2.1, 0.713921, 0.350178
-        self.vController.set_z_pid(1.3, 2.4893, 0.102084, 0.5)
+        self.vController.set_x_pid(2.8, 0.913921, 0.0, 0.15)
+        self.vController.set_y_pid(2.8, 0.913921, 0.0, 0.15)#2.1, 0.713921, 0.350178
+        self.vController.set_z_pid(1.3, 2.4893, 0.102084, 0.1)
 
         print 'Init done'
         while not rospy.is_shutdown():

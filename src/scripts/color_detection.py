@@ -137,10 +137,34 @@ class image_feature:
         # self.image_pub.publish(msg)
         #
         # #self.subscriber.unregister()
-    def find_relative_pose(self, x,y,w,h):
+    def find_relative_pose(self, x, y, w, h):
+        # 1*    2*
+        # 4*    3*
         quad_3d = np.float32([[-0.25, -0.25, 0], [0.25, -0.25, 0], [0.25, 0.25, 0], [-0.25, 0.25, 0]])
-        #nere vanstra hornet
+        # 1*    4*
+        # 2*    3*
         quad = np.float32([[x - w / 2, y - h / 2], [x - w / 2, y + h / 2], [x + w / 2, y + h / 2], [x + w / 2, y - h / 2]])
+        # 1*    4*
+        # 2*    3*
+        #quad_3d = np.float32([[-0.25, -0.25, 0], [-0.25, 0.25, 0], [0.25, 0.25, 0], [0.25, -0.25, 0]])
+        # 1*    4*
+        # 2*    3*
+        #quad = np.float32([[x - w / 2, y - h / 2], [x - w / 2, y + h / 2], [x + w / 2, y + h / 2], [x + w / 2, y - h / 2]])
+        # 3*    2*
+        # 4*    1*
+        #quad_3d = np.float32([[0.25/2, 0.25/2, 0], [0.25/2, -0.25/2, 0], [-0.25/2, -0.25/2, 0], [-0.25/2, 0.25/2, 0]])
+        # 3*    4*
+        # 2*    1*
+        #quad = np.float32([[x + w / 2, y + h / 2], [x - w / 2, y + h / 2], [x - w / 2, y - h / 2], [x + w / 2, y - h / 2]])
+        # 4*    3*
+        # 1*    2*
+        #quad_3d = np.float32([[-0.25, 0.25, 0], [0.25, 0.25, 0], [0.25, -0.25, 0], [-0.25, -0.25, 0]])
+        # 2*    3*
+        # 1*    4*
+        #quad = np.float32([[-w / 2, h / 2], [-w / 2, -h / 2], [-w / 2, h / 2], [w / 2, h / 2]])
+        # 4*    3*
+        # 1*    2*
+        #quad = np.float32([[x-w / 2, y+h / 2], [x+w / 2, y+h / 2], [x+w / 2, y-h / 2], [x-w / 2, y-h / 2]])
         #uppe vanstra hornet
         #quad=np.float32([[x-w/2, y+h/2], [x+w/2, y+h/2], [x+w/2, y-h/2], [x-w/2, y-h/2]])
         # uppe hogra hornet
@@ -153,12 +177,24 @@ class image_feature:
         dist_coef = np.zeros(4)
         _ret, rvec, tvec = cv2.solvePnP(quad_3d, quad, K, dist_coef)
         rmat = cv2.Rodrigues(rvec)[0]
-        cameraRotVector = cv2.Rodrigues(np.matrix(rmat).T)
         cameraTranslatevector = -np.matrix(rmat).T * np.matrix(tvec)
-        self.cam_pose.x = cameraTranslatevector.item((0,0))
-        self.cam_pose.y = cameraTranslatevector.item((1,0))
-        self.cam_pose.z = cameraTranslatevector.item((2,0))
+        T0 = np.zeros((4, 4))
+        T0[:3, :3] = rmat
+        T0[:4, 3] = [0, 0, 0, 1]
+        T0[:3, 3] = np.transpose(cameraTranslatevector)
+
+        p0 = np.array([-0.25/2, -0.25/2, 0, 1])
+        z0 = np.dot(T0, p0)
+        self.cam_pose.x = z0.item(0)
+        self.cam_pose.y = z0.item(1)
+        self.cam_pose.z = z0.item(2)
         self.cam_pose_pub.publish(self.cam_pose)
+        #cameraRotVector = cv2.Rodrigues(np.matrix(rmat).T)
+        #cameraTranslatevector = -np.matrix(rmat).T * np.matrix(tvec)
+        #self.cam_pose.x = cameraTranslatevector.item((0,0))
+        #self.cam_pose.y = cameraTranslatevector.item((1,0))
+        #self.cam_pose.z = cameraTranslatevector.item((2,0))
+        #self.cam_pose_pub.publish(self.cam_pose)
         #camera_position = -np.matrix(rmat).T * np.matrix(tvec)
         #print(camera_position)
 

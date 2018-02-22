@@ -49,7 +49,7 @@ class descend_on_object_server():
 
                 while not self.target_reached:#abs(self.object_pose.x) > 0.1 and abs(self.object_pose.y) > 0.1:
                     print(self.target_reached)
-                    rospy.sleep(2)
+                    rospy.sleep(1.5)
             elif self.detected and abs(self.object_pose.x) < 0.1 and abs(self.object_pose.y) < 0.1:
                 self.des_pose.pose.position.x = 0
                 self.des_pose.pose.position.y = 0
@@ -58,14 +58,14 @@ class descend_on_object_server():
                 self.vel_control.publish(self.des_pose)
                 while not self.target_reached:#self.local_pose.pose.position.z > self.des_pose.pose.position.z + 0.1:
                     print(self.target_reached)
-                    rospy.sleep(2)
+                    rospy.sleep(1.5)
 
         self.rate.sleep()
 
         rospy.loginfo("Hovering 1 meter above detected object")
         self.des_pose.pose.position.x = 0
         self.des_pose.pose.position.y = 0
-        self.des_pose.pose.position.z = self.local_pose.pose.position.z - 0.5
+        self.des_pose.pose.position.z = self.local_pose.pose.position.z - 0.55
         self.vel_control.publish(self.des_pose)
         rospy.sleep(1)
         self.result.position_reached.data = True

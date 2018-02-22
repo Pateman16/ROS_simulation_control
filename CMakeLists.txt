@@ -16,8 +16,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   geometry_msgs
-  apriltags2_ros
-
 )
 
 ## System dependencies are found with CMake's conventions
@@ -82,7 +80,6 @@ generate_messages(
   actionlib_msgs
   std_msgs
   geometry_msgs
-  apriltags2_ros
  )
 
 ################################################

@@ -9,6 +9,7 @@ class detect_object_server():
 
         #variables
         self.local_pose = PoseStamped()
+        self.detected = False
         #publishers
 
         #subscribers
